@@ -12,3 +12,9 @@ exports.randomNumber = functions.https.onRequest((request, response)=>{
 exports.redirectToGitHub = functions.https.onRequest((request, response)=>{
     response.redirect('https://github.com/viveshCodes');
 });
+
+// http callable function
+exports.sayHello = functions.https.onCall((data, context) => {
+    const name = data.name;
+    return `hello ${name} :)`;
+  });
