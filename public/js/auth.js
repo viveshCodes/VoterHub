@@ -28,6 +28,26 @@ registerForm.addEventListener('submit', (event) =>{
 
             registerForm.reset();
         }).catch(err =>{
-            registerForm.querySelector('.error').textContent = error.message;
+            registerForm.querySelector('.error').textContent = err.message;
         })
+});
+
+
+// login
+loginForm.addEventListener('submit', event =>{
+    event.preventDefault();
+
+    // get login credentials
+    const email = loginForm.email.value;
+    const password = loginForm.password.value;
+
+    firebase.auth().signInWithEmailAndPassword(email,password)
+        .then(cred =>{
+            console.log(cred.user);
+            console.log("Login Successful")
+            loginForm.reset();
+
+        }).catch(err =>{
+            loginForm.querySelector('.error').textContent = err.message;   
+        });
 });
