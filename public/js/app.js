@@ -23,3 +23,4 @@ button.addEventListener('click', () => {
     console.log(result.data);
   });
 });
+
