@@ -1,14 +1,18 @@
-const requestsRef = firebase.firestore().collection('requests');
+var app = new Vue({
+    el: '#app',
+    data: {
+     requests :[]
+    },
+    mounted(){
+        const requestsRef = firebase.firestore().collection('requests');
+        requestsRef.onSnapshot(snapshot =>{
+            let requests = [];
+            snapshot.forEach(doc =>{
+               requests.push({...doc.data(), id:doc.id})
+            });
+            this.requests = requests;
+        }); 
+    } // mounted
+  }) // vue
 
-requestsRef.onSnapshot(snapshot =>{
-    let html = ``;
-    const requests = snapshot;
-    requests.forEach(request =>{
-        html += `
-            <li>${request.data().text}</li>
-        `;
-    });
-    document.querySelector('ul').innerHTML = html;
-},err =>{
-    console.log(err.mesage);
-  }); // err
+
