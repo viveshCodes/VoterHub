@@ -17,3 +17,26 @@ exports.userDeleted = functions.auth.user().onDelete(user =>{
         return doc.delete();
        
 });
+
+
+// http callable functions (adding a tutorial request)
+exports.addRequest = functions.https.onCall((data, context) =>{
+    // check if user is not authenticated
+    if(!context.auth){
+        throw new functions.https.HttpsError(
+            'unauthenticated',
+            'only authenticated users can add requests'
+        );
+    }
+   if(data.text.length > 50 ){
+        throw new functions.https.HttpsError(
+            'invalid-argument',
+            'request must not be more than 50 characters long'
+    );
+   }
+   return admin.firestore().collection('requests').add({
+       text : data.text,
+       upvotes:0,
+   });
+
+});

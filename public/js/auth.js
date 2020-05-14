@@ -72,3 +72,6 @@ firebase.auth().onAuthStateChanged(user =>{
         authModals[0].classList.add('active');     
     }
 });
+
+
+
