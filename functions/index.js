@@ -1,20 +1,11 @@
 const functions = require('firebase-functions');
 
-// http request 1 : endpoint request 
-exports.randomNumber = functions.https.onRequest((request, response)=>{
-    const number = Math.round(Math.random() * 100);
-    // log the number in ''functions logs'
-    console.log(number);
-    response.send(number.toString());
+// auth trigger (new user signup)
+exports.newUserSignup = functions.auth.user().onCreate(user =>{
+    console.log('user created', user.email, user.uid);
 });
 
-// http request 2 : endpoint request 
-exports.redirectToGitHub = functions.https.onRequest((request, response)=>{
-    response.redirect('https://github.com/viveshCodes');
+// auth trigger (user delete)
+exports.userDeleted = functions.auth.user().onDelete(user =>{
+    console.log('user deleted', user.email, user.uid);
 });
-
-// http callable function
-exports.sayHello = functions.https.onCall((data, context) => {
-    const name = data.name;
-    return `hello ${name} :)`;
-  });
