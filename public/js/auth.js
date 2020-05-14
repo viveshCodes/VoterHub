@@ -2,7 +2,7 @@ const authSwitchLinks = document.querySelectorAll('.switch');
 const authModals = document.querySelectorAll('.auth .modal');
 const authWrapper = document.querySelector('.auth');
 
-// toggle auth modals
+/*________-- toggle auth modals________________*/
 authSwitchLinks.forEach(link => {
   link.addEventListener('click', () => {
     authModals.forEach(modal => modal.classList.toggle('active'));
@@ -15,42 +15,51 @@ const registerForm = document.querySelector('.register');
 const loginForm = document.querySelector('.login');
 const signOut = document.querySelector('.sign-out');
 
-// register
-registerForm.addEventListener('submit', (event) =>{
-    event.preventDefault();
+        // register
+        registerForm.addEventListener('submit', (event) =>{
+            event.preventDefault();
 
-    const email = registerForm.email.value.trim();
-    const password = registerForm.password.value.trim();
-    
-    firebase.auth().createUserWithEmailAndPassword(email, password)
-        .then(cred =>{
-            console.log(cred.user);
+            const email = registerForm.email.value.trim();
+            const password = registerForm.password.value.trim();
+            
+            firebase.auth().createUserWithEmailAndPassword(email, password)
+                .then(cred =>{
+                    console.log(cred.user);
 
-            registerForm.reset();
-        }).catch(err =>{
-            registerForm.querySelector('.error').textContent = err.message;
-        })
-});
-
-
-// login
-loginForm.addEventListener('submit', event =>{
-    event.preventDefault();
-
-    // get login credentials
-    const email = loginForm.email.value;
-    const password = loginForm.password.value;
-
-    firebase.auth().signInWithEmailAndPassword(email,password)
-        .then(cred =>{
-            console.log(cred.user);
-            console.log("Login Successful")
-            loginForm.reset();
-
-        }).catch(err =>{
-            loginForm.querySelector('.error').textContent = err.message;   
+                    registerForm.reset();
+                }).catch(err =>{
+                    registerForm.querySelector('.error').textContent = err.message;
+                })
         });
-});
+
+
+        // login
+        loginForm.addEventListener('submit', event =>{
+            event.preventDefault();
+
+            // get login credentials
+            const email = loginForm.email.value;
+            const password = loginForm.password.value;
+
+            firebase.auth().signInWithEmailAndPassword(email,password)
+                .then(cred =>{
+                    console.log(cred.user);
+                    console.log("Login Successful")
+                    loginForm.reset();
+
+                }).catch(err =>{
+                    loginForm.querySelector('.error').textContent = err.message;   
+                });
+        });
+
+        // signout
+        signOut.addEventListener('click', (event) =>{
+            event.preventDefault();
+            firebase.auth().signOut();  // firebase logs out with this method
+            
+        });
+
+
 
 
 /*_________Track Auth Status__________________*/
